@@ -1,0 +1,26 @@
+{
+  "name": "monitoring",
+  "version": "1.0.0",
+  "description": "Monitoring of the Boltz middleware with Google Cloud functions",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint *.js",
+    "start": "functions-framework --target checkBoltzStatus",
+    "deploy": "gcloud functions deploy checkBoltzStatus --runtime nodejs10 --trigger-http"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoltzExchange/monitoring.git"
+  },
+  "dependencies": {
+    "@google-cloud/datastore": "^3.1.2"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.17.1"
+  }
+}
