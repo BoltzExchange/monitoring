@@ -1,8 +1,9 @@
-const { set, get } = require('./datastore');
-const { getRequest } = require('./httpClient');
-const { sendMessage } = require('./discordClient');
+import { Request, Response } from 'express';
+import { set, get } from './Datastore';
+import { getRequest } from './HttpClient';
+import { sendMessage } from './DiscordClient';
 
-const handleResponse = async (res, url, error) => {
+const handleResponse = async (res: Response, url: string, error: any) => {
   const unavailable = error !== undefined;
   const unavailableLastTime = await get(url);
 
@@ -34,7 +35,7 @@ const handleResponse = async (res, url, error) => {
   }
 };
 
-exports.checkBoltzStatus = async (req, res) => {
+export const checkBoltzStatus = async (req: Request, res: Response) => {
   const boltzUrl = req.query.url;
 
   if (boltzUrl === undefined || boltzUrl === '') {
@@ -50,8 +51,8 @@ exports.checkBoltzStatus = async (req, res) => {
     // Parse the response to make sure it is valid
     JSON.parse(response);
 
-    handleResponse(res, boltzUrl);
+    await handleResponse(res, boltzUrl, undefined);
   } catch (error) {
-    handleResponse(res, boltzUrl, error);
+    await handleResponse(res, boltzUrl, error);
   }
 };

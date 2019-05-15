@@ -1,14 +1,14 @@
-const { Datastore } = require('@google-cloud/datastore');
+import { Datastore } from '@google-cloud/datastore';
 
 const kind = 'monitoringResult';
 
 const datastore = new Datastore();
 
-const getKey = url => {
+const getKey = (url: string) => {
   return datastore.key([kind, url]);
 };
 
-exports.set = (url, failed) => {
+export const set = (url: string, failed: boolean) => {
   return datastore.save({
     key: getKey(url),
     data: {
@@ -17,7 +17,7 @@ exports.set = (url, failed) => {
   });
 };
 
-exports.get = async url => {
+export const get = async (url: string) => {
   const results = await datastore.get(getKey(url));
 
   if (results.length > 0) {

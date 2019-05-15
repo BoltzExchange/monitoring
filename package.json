@@ -2,11 +2,13 @@
   "name": "monitoring",
   "version": "1.0.0",
   "description": "Monitoring of the Boltz middleware with Google Cloud functions",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "lint": "eslint *.js",
+    "compile": "tsc",
+    "compile:watch": "tsc --watch",
+    "lint": "tslint --project tsconfig.json",
     "start": "functions-framework --target checkBoltzStatus",
-    "deploy": "gcloud functions deploy checkBoltzStatus --runtime nodejs10 --trigger-http"
+    "deploy": "cp package.json .gcloudignore dist && cd dist && gcloud functions deploy checkBoltzStatus --runtime nodejs10 --trigger-http && cd .."
   },
   "license": "MIT",
   "repository": {
@@ -14,13 +16,15 @@
     "url": "git+https://github.com/BoltzExchange/monitoring.git"
   },
   "dependencies": {
-    "@google-cloud/datastore": "^3.1.2"
+    "@google-cloud/datastore": "^4.0.0",
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.1.0",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.2.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "prettier": "^1.17.1"
+    "@types/express": "^4.16.1",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-no-circular-imports": "^0.6.2",
+    "typescript": "^3.4.5"
   }
 }
