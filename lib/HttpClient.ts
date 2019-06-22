@@ -1,9 +1,10 @@
-const https = require('https');
+import https from 'https';
+import { IncomingMessage } from 'http';
 
-const handleResponse = (response, resolve) => {
+const handleResponse = (response: IncomingMessage, resolve: (data: string) => void) => {
   let data = '';
 
-  response.on('data', chunk => {
+  response.on('data', (chunk) => {
     data += chunk;
   });
 
@@ -12,19 +13,19 @@ const handleResponse = (response, resolve) => {
   });
 };
 
-exports.getRequest = url => {
-  return new Promise((resolve, reject) => {
+export const getRequest = (url: string) => {
+  return new Promise<string>((resolve, reject) => {
     https
-      .get(url, response => {
+      .get(url, (response) => {
         handleResponse(response, resolve);
       })
-      .on('error', error => {
+      .on('error', (error) => {
         reject(error);
       });
   });
 };
 
-exports.postRequest = (url, content) => {
+export const postRequest = (url, content) => {
   return new Promise((resolve, reject) => {
     const { hostname, pathname } = new URL(url);
 
@@ -42,11 +43,11 @@ exports.postRequest = (url, content) => {
             'Content-Length': body.length,
           },
         },
-        response => {
+        (response) => {
           handleResponse(response, resolve);
-        }
+        },
       )
-      .on('error', error => {
+      .on('error', (error) => {
         reject(error);
       });
 

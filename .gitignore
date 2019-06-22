@@ -39,11 +39,11 @@ jspm_packages/
 # TypeScript v1 declaration files
 typings/
 
+# Typescript compilation output
+dist/
+
 # Optional npm cache directory
 .npm
-
-# Optional eslint cache
-.eslintcache
 
 # Optional REPL history
 .node_repl_history
@@ -54,8 +54,5 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
-# next.js build output
-.next
+#  Webstorm config
+.idea/

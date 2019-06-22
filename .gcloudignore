@@ -14,4 +14,8 @@
 .gitignore
 
 node_modules
-#!include:.gitignore
+
+# Ignore results of the TypeScript compilation that are not needed for the execution
+*.ts
+*.js.map
+tsconfig.tsbuildinfo
