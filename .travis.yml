@@ -6,7 +6,30 @@ node_js:
 cache:
   directories:
     - "node_modules"
+    - "$HOME/google-cloud-sdk/"
 
 script:
   - npm run lint
   - npm run compile
+
+before_deploy:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  
+  - gcloud --quiet version
+  - gcloud --quiet components update
+
+  # Decrypt the secret needed for the Google Cloud login  
+  - openssl aes-256-cbc -K $encrypted_4d6620f31202_key -iv $encrypted_4d6620f31202_iv -in gcloud-service-key.json.enc -out gcloud-service-key.json -d
+
+  - gcloud auth activate-service-account --key-file gcloud-service-key.json
+  - gcloud config set project $PROJECT
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    branch: master
+
+  script:
+    - npm run deploy
