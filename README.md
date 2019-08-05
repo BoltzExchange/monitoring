@@ -1,4 +1,4 @@
-# Monitoring
+# Monitoring [![Build Status](https://travis-ci.org/BoltzExchange/monitoring.svg?branch=master)](https://travis-ci.org/BoltzExchange/monitoring)
 
 Monitoring of the Boltz backend with Google Cloud Functions
 
