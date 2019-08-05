@@ -1,3 +1,3 @@
 # Monitoring
 
-Monitoring of the Boltz middleware with Google Cloud functions
+Monitoring of the Boltz backend with Google Cloud functions

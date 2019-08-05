@@ -25,7 +25,7 @@ export const getRequest = (url: string) => {
   });
 };
 
-export const postRequest = (url, content) => {
+export const postRequest = (url: string, content: any) => {
   return new Promise((resolve, reject) => {
     const { hostname, pathname } = new URL(url);
 
