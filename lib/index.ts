@@ -53,9 +53,11 @@ export const checkBoltzStatus = async (req: Request, res: Response) => {
 
     await handleResponse(res, boltzUrl, undefined);
   } catch (error) {
+    console.log(`Request failed: ${error}`);
+
     // Sometimes the HTTP request fails arbitrarily because of this internal error, therefore
     // it doesn't have to be handled like the others and the request should be retried
-    if (error === 'Error: Internal HTTP2 error') {
+    if (error === 'Error: Internal HTTP2 error' || error === 'Error') {
       await checkBoltzStatus(req, res);
     } else {
       await handleResponse(res, boltzUrl, error);
