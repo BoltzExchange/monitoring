@@ -3,6 +3,8 @@ import { set, get } from './Datastore';
 import { getRequest } from './HttpClient';
 import { sendMessage } from './DiscordClient';
 
+let lastError: any = undefined;
+
 const handleResponse = async (res: Response, url: string, error: any) => {
   const unavailable = error !== undefined;
   const unavailableLastTime = await get(url);
@@ -55,9 +57,12 @@ export const checkBoltzStatus = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(`Request failed: ${error}`);
 
-    // Sometimes the HTTP request fails arbitrarily because of this internal error, therefore
-    // it doesn't have to be handled like the others and the request should be retried
-    if (error === 'Error: Internal HTTP2 error' || error === 'Error') {
+    // Sometimes requests just fail randomly. Therefore, if a request fails
+    // it will be retried and if it fails and its error matches the one of
+    // the failed request berfore it will be handled accordingly
+    if (lastError !== error) {
+      lastError = error;
+
       await checkBoltzStatus(req, res);
     } else {
       await handleResponse(res, boltzUrl, error);

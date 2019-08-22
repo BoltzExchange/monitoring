@@ -22,7 +22,7 @@
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.2.1",
     "@types/express": "^4.17.1",
-    "tslint": "^5.18.0",
+    "tslint": "^5.19.0",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-no-circular-imports": "^0.7.0",
     "typescript": "^3.5.3"
